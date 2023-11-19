@@ -13,16 +13,31 @@ namespace Grid_Mesher.Stage
         public Vector3 A {  get; set; }
         public Vector3 B {  get; set; }
         public Vector3 C {  get; set; }
+        public Vector3[] Nt { get; set; }
+
 
         public void Draw(LockBitmap lb)
         {
-            Point Ap = Utils.ConvertToBitmapPoint(A, lb);
-            Point Bp = Utils.ConvertToBitmapPoint(B, lb);
-            Point Cp = Utils.ConvertToBitmapPoint(C, lb);
-            Drawing.FillPolygon(lb, Color.Goldenrod, new Point[] { Ap, Bp, Cp });
-            Drawing.DrawLine(lb, gridColor, Ap, Bp);
-            Drawing.DrawLine(lb, gridColor, Bp, Cp);
-            Drawing.DrawLine(lb, gridColor, Cp, Ap);
+            Point Ap = Utils.ConvertToDrawingPoint(A, lb);
+            Point Bp = Utils.ConvertToDrawingPoint(B, lb);
+            Point Cp = Utils.ConvertToDrawingPoint(C, lb);
+            Drawing.FillPolygon(lb, Configuration.Color, new Point[] { Ap, Bp, Cp }, this);
+            if (Configuration.ShouldDrawGrid)
+            {
+                Drawing.DrawLine(lb, gridColor, Ap, Bp);
+                Drawing.DrawLine(lb, gridColor, Bp, Cp);
+                Drawing.DrawLine(lb, gridColor, Cp, Ap);
+            }
+        }
+
+        public (float alfa, float beta, float gamma) GetBar(PointF P)
+        {
+            float alfa = ((B.Y * C.X - C.Y * B.X) + (C.Y * P.X - P.Y * C.X) + (P.Y * B.X - B.Y * P.X)) /
+                ((B.Y * C.X - C.Y * B.X) + (C.Y * A.X - A.Y * C.X) + (A.Y * B.X - B.Y * A.X));
+            float beta = ((C.Y * A.X - A.Y * C.X) + (A.Y * P.X - P.Y * A.X) + (P.Y * C.X - C.Y * P.X)) /
+                ((B.Y * C.X - C.Y * B.X) + (C.Y * A.X - A.Y * C.X) + (A.Y * B.X - B.Y * A.X));
+            float gamma = 1 - alfa - beta;
+            return (alfa, beta, gamma);
         }
     }
 }

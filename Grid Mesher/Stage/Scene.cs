@@ -33,8 +33,7 @@ namespace Grid_Mesher
 
         public void SetUpTriangulation()
         {
-            triangulation = new Triangulation(Configuration.xTriCount, Configuration.yTriCount);
-            Draw();
+            triangulation = new Triangulation(Configuration.XTriCount, Configuration.YTriCount);
         }
         private void Clear()
         {
