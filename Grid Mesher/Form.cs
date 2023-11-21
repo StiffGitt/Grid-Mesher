@@ -123,10 +123,5 @@ namespace Grid_Mesher
         {
 
         }
-
-        private void trackBar1_Scroll(object sender, EventArgs e)
-        {
-
-        }
     }
 }

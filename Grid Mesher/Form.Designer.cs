@@ -343,7 +343,7 @@
             label8.Name = "label8";
             label8.Size = new Size(25, 25);
             label8.TabIndex = 3;
-            label8.Text = "x:";
+            label8.Text = "y:";
             // 
             // yBox
             // 
@@ -375,7 +375,7 @@
             // trackBar1
             // 
             trackBar1.AutoSize = false;
-            trackBar1.Location = new Point(31, 63);
+            trackBar1.Location = new Point(31, 56);
             trackBar1.Margin = new Padding(3, 4, 3, 4);
             trackBar1.Maximum = 100;
             trackBar1.Minimum = 1;
@@ -384,7 +384,6 @@
             trackBar1.TabIndex = 5;
             trackBar1.TickStyle = TickStyle.None;
             trackBar1.Value = 10;
-            trackBar1.Scroll += trackBar1_Scroll;
             // 
             // Form
             // 
