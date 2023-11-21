@@ -9,6 +9,6 @@ namespace Grid_Mesher.Stage
 {
     public static class Light
     {
-        public static Vector3 Position { get; set; } = new Vector3(0.1f, 0.5f, 0.2f);
+        public static Vector3 Position { get; set; } = new Vector3(0.25f, 0.75f, 0.3f);
     }
 }

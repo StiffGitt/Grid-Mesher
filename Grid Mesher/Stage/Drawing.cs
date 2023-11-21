@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -85,13 +86,13 @@ namespace Grid_Mesher.Stage
         {
             DrawLineWithBresenham(lb, color, new Point(a.X, lb.Height - a.Y), new Point(b.X, lb.Height - b.Y));
         }
-        public static void FillBitmap(LockBitmap lb, Color color)
+        public static void SetColor(Bitmap lb, Color color)
         {
             for (int x = 0; x < lb.Width; x++)
                 for (int y = 0; y < lb.Height; y++)
                     lb.SetPixel(x, y, color);
         }
-        public static void FillPolygon(LockBitmap lb, Color color, Point[] points, Triangle triangle)
+        public static void FillPolygon(LockBitmap lb, Point[] points, Triangle triangle)
         {
             int n = points.Length;
             List<AETev> AET = new List<AETev> ();
@@ -125,7 +126,7 @@ namespace Grid_Mesher.Stage
                 {
                     for (int x = (int) AET[i].x; x < AET[i + 1].x; x++)
                     {
-                        Color newColor = Utils.GetColorForPixel(triangle, color, new PointF((float)x / lb.Width, (float)y / lb.Height));
+                        Color newColor = Utils.GetColorForPixel(triangle, Configuration.background.GetPixel(x, lb.Height - y), new PointF((float)x / lb.Width, (float)y / lb.Height));
                         lb.SetPixel(x, lb.Height - y, newColor);
                     }
                 }
@@ -135,6 +136,13 @@ namespace Grid_Mesher.Stage
                     AET[i] = AET[i].DoStep();
                 }
             }
+        }
+
+        internal static void ClearLB(LockBitmap lb)
+        {
+            for (int x = 0; x < lb.Width; x++)
+                for (int y = 0; y < lb.Height; y++)
+                    lb.SetPixel(x, y, Configuration.background.GetPixel(x,y));
         }
     }
 }

@@ -13,5 +13,6 @@ namespace Grid_Mesher.Stage
         public const float YMax = 1;
         public const float eps = 0.000001f;
         public static readonly Vector3 V = Vector3.UnitZ;
+        public static Color firstColor = Color.Goldenrod;
     }
 }

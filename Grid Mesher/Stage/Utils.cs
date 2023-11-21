@@ -76,7 +76,7 @@ namespace Grid_Mesher.Stage
             };
             Vector3 N = triangle.Nt[0] * bar.alfa + triangle.Nt[1] * bar.beta + triangle.Nt[2] * bar.gamma;
             Vector3 L = Vector3.Normalize(Light.Position - P);
-            Vector3 R = (2 * Vector3.Dot(N, L) * N) - L;
+            Vector3 R = Vector3.Normalize((2 * Vector3.Dot(N, L) * N) - L);
             float cosNL = Vector3.Dot(N, L);
             float cosVR = Vector3.Dot(Consts.V, R);
             cosNL = cosNL < 0 ? 0 : cosNL;
@@ -85,12 +85,27 @@ namespace Grid_Mesher.Stage
             Vector3 I0 = Vector3FromRGB(baseColor);
 
             Vector3 I = Configuration.Kd * Configuration.Il * I0 * cosNL +
-                Configuration.Kd * Configuration.Il * I0 * (float)Math.Pow(cosVR, Configuration.M);
+                Configuration.Ks * Configuration.Il * I0 * PowFloats(cosVR, Configuration.M);
 
-            return Color.FromArgb((byte)(I.X * 256), (byte)(I.Y * 256), (byte)(I.Z * 256));
+            if (I.X > 1)
+                I.X = 1;
+            if (I.Y > 1)
+                I.Y = 1;
+            if (I.Z > 1)
+                I.Z = 1;
+
+            return Color.FromArgb((byte)(I.X * 255), (byte)(I.Y * 255), (byte)(I.Z * 255));
         }
-
-        internal static Vector3 Vector3FromRGB(Color color)
+        private static float PowFloats(float a, int b)
+        {
+            float pow = 1;
+            for (int i = 0; i < b; i++) 
+            {
+                pow *= a;
+            }
+            return pow;
+        }
+        public static Vector3 Vector3FromRGB(Color color)
         {
             return new Vector3()
             {

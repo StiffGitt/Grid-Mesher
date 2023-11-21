@@ -21,7 +21,7 @@ namespace Grid_Mesher.Stage
             Point Ap = Utils.ConvertToDrawingPoint(A, lb);
             Point Bp = Utils.ConvertToDrawingPoint(B, lb);
             Point Cp = Utils.ConvertToDrawingPoint(C, lb);
-            Drawing.FillPolygon(lb, Configuration.Color, new Point[] { Ap, Bp, Cp }, this);
+            Drawing.FillPolygon(lb, new Point[] { Ap, Bp, Cp }, this);
             if (Configuration.ShouldDrawGrid)
             {
                 Drawing.DrawLine(lb, gridColor, Ap, Bp);
