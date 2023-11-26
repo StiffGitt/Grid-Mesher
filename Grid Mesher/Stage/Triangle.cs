@@ -43,7 +43,8 @@ namespace Grid_Mesher.Stage
         }
         public void Draw(LockBitmap lb)
         {
-            Drawing.DrawTriangle(lb, this);
+            if (Configuration.ShouldDrawBackground)
+                Drawing.DrawTriangle(lb, this);
             if (Configuration.ShouldDrawGrid)
             {
                 Point Ap = Utils.ConvertToDrawingPoint(A, lb);

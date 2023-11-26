@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Grid_Mesher
 {
@@ -23,7 +24,6 @@ namespace Grid_Mesher
             pictureBox.Image = bitmap;
             this.lockmap = new LockBitmap(bitmap);
             this.pictureBox = pictureBox;
-            SetUpTriangulation();
 
             Configuration.Z = new float[4, 4] { { 0, 0.5f, 0.3f, 0 }, { 0.3f, 0.2f, 0.2f, 0.1f }, { 0.1f, 0.2f, 0.2f, 0.1f }, { 0, 0.1f, 0.1f, 0 } };
 
@@ -35,7 +35,6 @@ namespace Grid_Mesher
             if (resetBackGround)
                 SetUpTriangulation();
             lockmap.LockBits();
-            //Clear();
             triangulation.Draw(lockmap);
             lockmap.UnlockBits();
         }
@@ -44,9 +43,21 @@ namespace Grid_Mesher
         {
             triangulation = new Triangulation(Configuration.XTriCount, Configuration.YTriCount);
         }
-        private void Clear()
+        public void Clear()
         {
-            Drawing.ClearLB(lockmap);
+            lockmap.LockBits();
+            Drawing.ClearLB(lockmap, pictureBox.BackColor);
+            lockmap.UnlockBits();
+        }
+        public void SetNormalBitmapFromFile(string imagePath)
+        {
+            Bitmap bt = new Bitmap(imagePath);
+            Bitmap scaledBitmap = new Bitmap(pictureBox.Width, pictureBox.Height);
+            using (Graphics g = Graphics.FromImage(scaledBitmap))
+            {
+                g.DrawImage(bt, 0, 0, pictureBox.Width, pictureBox.Height);
+            }
+            Utils.MakeNormalMap(scaledBitmap);
         }
     }
 }

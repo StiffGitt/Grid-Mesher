@@ -37,12 +37,15 @@
             imageButton = new Button();
             selectColorButton = new Button();
             groupBox1 = new GroupBox();
+            onlyGridBox1 = new CheckBox();
             drawGridCheckbox = new CheckBox();
             triYLabel = new Label();
             triXLabel = new Label();
             triYTrackBar = new TrackBar();
             triXTrackBar = new TrackBar();
             groupBox2 = new GroupBox();
+            zLightLabel = new Label();
+            zLightTrackBar = new TrackBar();
             animationCheckBox = new CheckBox();
             mLabel = new Label();
             mTrackBar = new TrackBar();
@@ -57,8 +60,13 @@
             yBox = new ComboBox();
             label7 = new Label();
             xBox = new ComboBox();
+            groupBox4 = new GroupBox();
+            normalCheckBox = new CheckBox();
+            normalButton = new Button();
             colorDialog = new ColorDialog();
             animationTimer = new System.Windows.Forms.Timer(components);
+            fpsTimer = new System.Windows.Forms.Timer(components);
+            replaceCheckBox = new CheckBox();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
             flowLayoutPanel1.SuspendLayout();
@@ -66,11 +74,13 @@
             ((System.ComponentModel.ISupportInitialize)triYTrackBar).BeginInit();
             ((System.ComponentModel.ISupportInitialize)triXTrackBar).BeginInit();
             groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)zLightTrackBar).BeginInit();
             ((System.ComponentModel.ISupportInitialize)mTrackBar).BeginInit();
             ((System.ComponentModel.ISupportInitialize)KsTrackBar).BeginInit();
             ((System.ComponentModel.ISupportInitialize)KdTrackBar).BeginInit();
             groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)zTrackBar).BeginInit();
+            groupBox4.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -118,6 +128,7 @@
             flowLayoutPanel1.Controls.Add(groupBox1);
             flowLayoutPanel1.Controls.Add(groupBox2);
             flowLayoutPanel1.Controls.Add(groupBox3);
+            flowLayoutPanel1.Controls.Add(groupBox4);
             flowLayoutPanel1.Dock = DockStyle.Fill;
             flowLayoutPanel1.Location = new Point(706, 3);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -159,6 +170,7 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(onlyGridBox1);
             groupBox1.Controls.Add(drawGridCheckbox);
             groupBox1.Controls.Add(triYLabel);
             groupBox1.Controls.Add(triXLabel);
@@ -171,6 +183,17 @@
             groupBox1.TabIndex = 3;
             groupBox1.TabStop = false;
             groupBox1.Text = "Triangulation accuracy";
+            // 
+            // onlyGridBox1
+            // 
+            onlyGridBox1.AutoSize = true;
+            onlyGridBox1.Location = new Point(127, 85);
+            onlyGridBox1.Name = "onlyGridBox1";
+            onlyGridBox1.Size = new Size(98, 19);
+            onlyGridBox1.TabIndex = 5;
+            onlyGridBox1.Text = "And only grid";
+            onlyGridBox1.UseVisualStyleBackColor = true;
+            onlyGridBox1.CheckedChanged += onlyGridBox1_CheckedChanged;
             // 
             // drawGridCheckbox
             // 
@@ -232,6 +255,8 @@
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(zLightLabel);
+            groupBox2.Controls.Add(zLightTrackBar);
             groupBox2.Controls.Add(animationCheckBox);
             groupBox2.Controls.Add(mLabel);
             groupBox2.Controls.Add(mTrackBar);
@@ -242,10 +267,32 @@
             groupBox2.Dock = DockStyle.Top;
             groupBox2.Location = new Point(3, 201);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(272, 160);
+            groupBox2.Size = new Size(272, 188);
             groupBox2.TabIndex = 4;
             groupBox2.TabStop = false;
             groupBox2.Text = "Lighting parameters";
+            // 
+            // zLightLabel
+            // 
+            zLightLabel.AutoSize = true;
+            zLightLabel.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            zLightLabel.Location = new Point(4, 148);
+            zLightLabel.Name = "zLightLabel";
+            zLightLabel.Size = new Size(20, 21);
+            zLightLabel.TabIndex = 8;
+            zLightLabel.Text = "z:";
+            // 
+            // zLightTrackBar
+            // 
+            zLightTrackBar.AutoSize = false;
+            zLightTrackBar.Location = new Point(44, 148);
+            zLightTrackBar.Maximum = 100;
+            zLightTrackBar.Name = "zLightTrackBar";
+            zLightTrackBar.Size = new Size(213, 26);
+            zLightTrackBar.TabIndex = 7;
+            zLightTrackBar.TickStyle = TickStyle.None;
+            zLightTrackBar.Value = 30;
+            zLightTrackBar.ValueChanged += zLightTrackBar_ValueChanged;
             // 
             // animationCheckBox
             // 
@@ -334,11 +381,11 @@
             groupBox3.Controls.Add(yBox);
             groupBox3.Controls.Add(label7);
             groupBox3.Controls.Add(xBox);
-            groupBox3.Location = new Point(3, 366);
+            groupBox3.Location = new Point(3, 394);
             groupBox3.Margin = new Padding(3, 2, 3, 2);
             groupBox3.Name = "groupBox3";
             groupBox3.Padding = new Padding(3, 2, 3, 2);
-            groupBox3.Size = new Size(269, 94);
+            groupBox3.Size = new Size(269, 65);
             groupBox3.TabIndex = 8;
             groupBox3.TabStop = false;
             groupBox3.Text = "Z";
@@ -405,11 +452,61 @@
             xBox.TabIndex = 0;
             xBox.SelectedIndexChanged += box_SelectedIndexChanged;
             // 
+            // groupBox4
+            // 
+            groupBox4.Controls.Add(replaceCheckBox);
+            groupBox4.Controls.Add(normalCheckBox);
+            groupBox4.Controls.Add(normalButton);
+            groupBox4.Location = new Point(3, 464);
+            groupBox4.Name = "groupBox4";
+            groupBox4.Size = new Size(269, 80);
+            groupBox4.TabIndex = 9;
+            groupBox4.TabStop = false;
+            groupBox4.Text = "Normal map";
+            // 
+            // normalCheckBox
+            // 
+            normalCheckBox.AutoSize = true;
+            normalCheckBox.Location = new Point(13, 54);
+            normalCheckBox.Name = "normalCheckBox";
+            normalCheckBox.Size = new Size(117, 19);
+            normalCheckBox.TabIndex = 1;
+            normalCheckBox.Text = "Normal mapping";
+            normalCheckBox.UseVisualStyleBackColor = true;
+            normalCheckBox.CheckedChanged += normalCheckBox_CheckedChanged;
+            // 
+            // normalButton
+            // 
+            normalButton.Location = new Point(9, 22);
+            normalButton.Name = "normalButton";
+            normalButton.Size = new Size(248, 23);
+            normalButton.TabIndex = 0;
+            normalButton.Text = "Select normal map ...";
+            normalButton.UseVisualStyleBackColor = true;
+            normalButton.Click += normalButton_Click;
+            // 
             // animationTimer
             // 
             animationTimer.Enabled = true;
             animationTimer.Interval = 1;
             animationTimer.Tick += animationTimer_Tick;
+            // 
+            // fpsTimer
+            // 
+            fpsTimer.Enabled = true;
+            fpsTimer.Interval = 1000;
+            fpsTimer.Tick += fpsTimer_Tick;
+            // 
+            // replaceCheckBox
+            // 
+            replaceCheckBox.AutoSize = true;
+            replaceCheckBox.Location = new Point(153, 54);
+            replaceCheckBox.Name = "replaceCheckBox";
+            replaceCheckBox.Size = new Size(104, 19);
+            replaceCheckBox.TabIndex = 2;
+            replaceCheckBox.Text = "Should replace";
+            replaceCheckBox.UseVisualStyleBackColor = true;
+            replaceCheckBox.CheckedChanged += replaceCheckBox_CheckedChanged;
             // 
             // Form
             // 
@@ -429,12 +526,15 @@
             ((System.ComponentModel.ISupportInitialize)triXTrackBar).EndInit();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)zLightTrackBar).EndInit();
             ((System.ComponentModel.ISupportInitialize)mTrackBar).EndInit();
             ((System.ComponentModel.ISupportInitialize)KsTrackBar).EndInit();
             ((System.ComponentModel.ISupportInitialize)KdTrackBar).EndInit();
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)zTrackBar).EndInit();
+            groupBox4.ResumeLayout(false);
+            groupBox4.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -470,5 +570,13 @@
         private CheckBox animationCheckBox;
         private System.Windows.Forms.Timer animationTimer;
         private Label zLabel;
+        private Label zLightLabel;
+        private TrackBar zLightTrackBar;
+        private GroupBox groupBox4;
+        private Button normalButton;
+        private CheckBox normalCheckBox;
+        private System.Windows.Forms.Timer fpsTimer;
+        private CheckBox onlyGridBox1;
+        private CheckBox replaceCheckBox;
     }
 }

@@ -49,6 +49,8 @@ namespace Grid_Mesher.Stage
         }
         public void Draw(LockBitmap lb)
         {
+            if(!Configuration.ShouldDrawBackground)
+                Drawing.ClearLB(lb, Consts.BackColor);
             Parallel.ForEach(triangles, triangle => triangle.Draw(lb));
         }
     }

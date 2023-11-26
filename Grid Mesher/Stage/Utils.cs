@@ -72,9 +72,25 @@ namespace Grid_Mesher.Stage
             Vector3 Pv = new Vector3() {X = 0, Y = 1, Z = zv};
             return Vector3.Normalize(Vector3.Cross(Pu, Pv));
         }
-
-        public static Color GetColorForPixel(Triangle triangle, Color baseColor, PointF point)
+        private static Vector3 ModifyByNormal(Vector3 Np, int X, int Y)
         {
+            if (X >= Configuration.NormalMap.GetLength(0) || Y >= Configuration.NormalMap.GetLength(1))
+                return Np;
+            
+            Vector3 Nt = Configuration.NormalMap[X, Y];
+            if (Configuration.ShouldReplace)
+                return Nt;
+
+            Vector3 B = Vector3.Cross(Np, Vector3.UnitZ);
+            Vector3 T = Vector3.Cross(B, Np);
+            Matrix3 M = new Matrix3(T, B, Np);
+            return M.Transform(Nt);
+        }
+
+        public static Color GetColorForPixel(Triangle triangle, Pixel p)
+        {
+            Color baseColor = p.Color;
+            PointF point = p.Pf;
             var bar = triangle.GetBar(point);
             Vector3 P = new Vector3()
             {
@@ -83,6 +99,8 @@ namespace Grid_Mesher.Stage
                 Z = bar.alfa * triangle.A.Z + bar.beta * triangle.B.Z + bar.gamma * triangle.C.Z
             };
             Vector3 N = triangle.Nt[0] * bar.alfa + triangle.Nt[1] * bar.beta + triangle.Nt[2] * bar.gamma;
+            if (Configuration.ShouldNormalMap)
+                N = ModifyByNormal(N, p.X, p.Y);
             Vector3 L = Vector3.Normalize(Light.Position - P);
             Vector3 R = Vector3.Normalize((2 * Vector3.Dot(N, L) * N) - L);
             float cosNL = Vector3.Dot(N, L);
@@ -117,10 +135,22 @@ namespace Grid_Mesher.Stage
         {
             return new Vector3()
             {
-                X = (float)color.R / 256,
-                Y = (float)color.G / 256,
-                Z = (float)color.B / 256,
+                X = (float)color.R / 255,
+                Y = (float)color.G / 255,
+                Z = (float)color.B / 255,
             };
+        }
+        public static void MakeNormalMap(Bitmap bt)
+        {
+            Vector3[,] map = new Vector3[bt.Width, bt.Height];
+            for (int x = 0; x < bt.Width; x++)
+            {
+                for(int y = 0; y < bt.Height; y++)
+                {
+                    map[x, y] = Vector3.Normalize(Vector3FromRGB(bt.GetPixel(x, bt.Height - y - 1)));
+                }
+            }
+            Configuration.NormalMap = map;
         }
     }
 }

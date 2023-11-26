@@ -6,12 +6,15 @@ namespace Grid_Mesher
     public partial class Form : System.Windows.Forms.Form
     {
         private Scene scene;
+        private bool zBoxChanged = false;
+        private int ticksThisSecond = 0;
         public Form()
         {
             InitializeComponent();
             Initialize();
             SetConfiguration();
             this.scene = new Scene(pictureBox);
+            SetNormalMap();
             pictureBox.Refresh();
         }
         private void Initialize()
@@ -42,12 +45,23 @@ namespace Grid_Mesher
             Configuration.Ks = (float)KsTrackBar.Value / 100;
             Configuration.M = mTrackBar.Value;
             Configuration.ShouldDrawGrid = drawGridCheckbox.Checked;
+            Configuration.ShouldDrawBackground = !onlyGridBox1.Checked;
+            Light.Position = new System.Numerics.Vector3(Light.Position.X, Light.Position.Y, (float)zLightTrackBar.Value / 100);
+            Configuration.ShouldNormalMap = normalCheckBox.Checked;
             triXLabel.Text = "x: " + Configuration.XTriCount;
             triYLabel.Text = "y: " + Configuration.YTriCount;
             kdLabel.Text = "kd: " + Configuration.Kd;
             ksLabel.Text = "ks: " + Configuration.Ks;
             mLabel.Text = "m: " + Configuration.M;
             zLabel.Text = (zTrackBar.Value * Consts.XMax / zTrackBar.Maximum).ToString();
+            zLightLabel.Text = ((float)zLightTrackBar.Value / 100).ToString();
+            Consts.BackColor = pictureBox.BackColor;
+        }
+        private void SetNormalMap()
+        {
+            string resourcesPath = Directory.GetCurrentDirectory() + "\\..\\..\\..\\resources\\";
+            string fileName = "bricks.jpg";
+            scene.SetNormalBitmapFromFile(resourcesPath + fileName);
         }
 
         private void Form_Resize(object sender, EventArgs e)
@@ -69,6 +83,7 @@ namespace Grid_Mesher
             if (scene != null)
                 scene.Draw(resetBackGround);
             pictureBox.Refresh();
+            ticksThisSecond++;
         }
 
         private void KdTrackBar_ValueChanged(object sender, EventArgs e)
@@ -135,6 +150,7 @@ namespace Grid_Mesher
             {
                 zTrackBar.Value = (int)(Configuration.Z[int.Parse((string)xBox.SelectedItem), int.Parse((string)yBox.SelectedItem)] / Consts.XMax * zTrackBar.Maximum);
                 zLabel.Text = (zTrackBar.Value * Consts.XMax / zTrackBar.Maximum).ToString();
+                zBoxChanged = true;
             }
         }
 
@@ -142,7 +158,12 @@ namespace Grid_Mesher
         {
             Configuration.Z[int.Parse((string)xBox.SelectedItem), int.Parse((string)yBox.SelectedItem)] = (float)zTrackBar.Value / zTrackBar.Maximum;
             zLabel.Text = (zTrackBar.Value * Consts.XMax / zTrackBar.Maximum).ToString();
-            Draw(true);
+            if (!zBoxChanged)
+            {
+                Draw(true);
+            }
+            else
+                zBoxChanged = false;
         }
 
         private void animationCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -157,6 +178,54 @@ namespace Grid_Mesher
                 Light.Animate();
                 Draw();
             }
+        }
+
+        private void zLightTrackBar_ValueChanged(object sender, EventArgs e)
+        {
+            Light.Position = new System.Numerics.Vector3(Light.Position.X, Light.Position.Y, (float)zLightTrackBar.Value / 100);
+            zLightLabel.Text = ((float)zLightTrackBar.Value / 100).ToString();
+            Draw();
+        }
+
+        private void normalCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            Configuration.ShouldNormalMap = normalCheckBox.Checked;
+            Draw();
+        }
+
+        private void normalButton_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            openFileDialog.Title = "Wybierz obraz";
+            openFileDialog.Filter = "Pliki obrazów|*.jpg;*.jpeg;*.png;*.gif;*.bmp|Wszystkie pliki|*.*";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                scene.SetNormalBitmapFromFile(openFileDialog.FileName);
+            }
+            Draw();
+        }
+
+
+        private void fpsTimer_Tick(object sender, EventArgs e)
+        {
+            this.Text = "Grid Mesher: " + (ticksThisSecond).ToString() + "FPS";
+            ticksThisSecond = 0;
+        }
+
+        private void onlyGridBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!drawGridCheckbox.Checked)
+                return;
+            Configuration.ShouldDrawBackground = !onlyGridBox1.Checked;
+            Draw(true);
+        }
+
+        private void replaceCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            Configuration.ShouldReplace = replaceCheckBox.Checked;
+            Draw();
         }
     }
 }

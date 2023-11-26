@@ -86,15 +86,15 @@ namespace Grid_Mesher.Stage
         {
             Parallel.ForEach(triangle.Pixels, p =>
             {
-                Color newColor = Utils.GetColorForPixel(triangle, p.Color, p.Pf);
+                Color newColor = Utils.GetColorForPixel(triangle, p);
                 lb.SetPixel(p.X, lb.Height - p.Y, newColor);
             });
         }
-        public static void ClearLB(LockBitmap lb)
+        public static void ClearLB(LockBitmap lb, Color c)
         {
             for (int x = 0; x < lb.Width; x++)
                 for (int y = 0; y < lb.Height; y++)
-                    lb.SetPixel(x, y, Configuration.background.GetPixel(x,y));
+                    lb.SetPixel(x, y, c);
         }
     }
 }

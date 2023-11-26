@@ -9,7 +9,7 @@ namespace Grid_Mesher.Stage
 {
     public static class Light
     {
-        public static Vector3 Position { get; set; } = new Vector3(0.25f, 0.75f, 0.3f);
+        public static Vector3 Position { get; set; } = new Vector3(1f, 0.5f, 0.3f);
         public static float R { get; set; } = 0.5f;
         public static float Theta { get; set; } = 0f;
         public static bool IsInside { get; set; } = true;
