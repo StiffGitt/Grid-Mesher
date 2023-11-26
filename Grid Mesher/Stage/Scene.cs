@@ -1,6 +1,7 @@
 ﻿using Grid_Mesher.Stage;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -26,14 +27,16 @@ namespace Grid_Mesher
 
             Configuration.Z = new float[4, 4] { { 0, 0.5f, 0.3f, 0 }, { 0.3f, 0.2f, 0.2f, 0.1f }, { 0.1f, 0.2f, 0.2f, 0.1f }, { 0, 0.1f, 0.1f, 0 } };
 
-            Draw();
+            Draw(true);
         }
 
-        public void Draw()
+        public void Draw(bool resetBackGround = false)
         {
+            if (resetBackGround)
+                SetUpTriangulation();
             lockmap.LockBits();
-            Clear();
-            triangulation.DrawGrid(lockmap);
+            //Clear();
+            triangulation.Draw(lockmap);
             lockmap.UnlockBits();
         }
 

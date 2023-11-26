@@ -17,6 +17,14 @@ namespace Grid_Mesher.Stage
             int y = (int)(v[1] * height) + 1;
             return new Point(x, y);
         }
+        public static Point ConvertToDrawingPoint(Vector3 v)
+        {
+            int width = Configuration.background.Width - 1;
+            int height = Configuration.background.Height - 1;
+            int x = (int)(v[0] * width);
+            int y = (int)(v[1] * height) + 1;
+            return new Point(x, y);
+        }
         public static float GetZ(float x, float y)
         {
             return FuncZ(x, y);

@@ -18,5 +18,6 @@ namespace Grid_Mesher
         public static Vector3 Il { get; set; } = new Vector3(1, 1, 1);
         public static int M { get; set; } = 10;
         public static float[,] Z { get; set;} = new float[4, 4];
+        public static bool ShouldAnimate { get; set; } = false;
     }
 }

@@ -16,23 +16,23 @@ namespace Grid_Mesher
         }
         private void Initialize()
         {
-            xBox.Items.AddRange(Enumerable.Range(1, 4).Select(x => x.ToString()).ToArray());
+            xBox.Items.AddRange(Enumerable.Range(0, 4).Select(x => x.ToString()).ToArray());
             xBox.SelectedIndex = 0;
-            yBox.Items.AddRange(Enumerable.Range(1, 4).Select(x => x.ToString()).ToArray());
+            yBox.Items.AddRange(Enumerable.Range(0, 4).Select(x => x.ToString()).ToArray());
             yBox.SelectedIndex = 0;
         }
         private void triXTrackBar_ValueChanged(object sender, EventArgs e)
         {
             Configuration.XTriCount = triXTrackBar.Value;
-            scene.SetUpTriangulation();
-            Draw();
+            triXLabel.Text = "x: " + Configuration.XTriCount;
+            Draw(true);
         }
 
         private void triYTrackBar_Scroll(object sender, EventArgs e)
         {
             Configuration.YTriCount = triYTrackBar.Value;
-            scene.SetUpTriangulation();
-            Draw();
+            triYLabel.Text = "y: " + Configuration.YTriCount;
+            Draw(true);
         }
         private void SetConfiguration()
         {
@@ -42,6 +42,12 @@ namespace Grid_Mesher
             Configuration.Ks = (float)KsTrackBar.Value / 100;
             Configuration.M = mTrackBar.Value;
             Configuration.ShouldDrawGrid = drawGridCheckbox.Checked;
+            triXLabel.Text = "x: " + Configuration.XTriCount;
+            triYLabel.Text = "y: " + Configuration.YTriCount;
+            kdLabel.Text = "kd: " + Configuration.Kd;
+            ksLabel.Text = "ks: " + Configuration.Ks;
+            mLabel.Text = "m: " + Configuration.M;
+            zLabel.Text = (zTrackBar.Value * Consts.XMax / zTrackBar.Maximum).ToString();
         }
 
         private void Form_Resize(object sender, EventArgs e)
@@ -55,30 +61,34 @@ namespace Grid_Mesher
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
                 Drawing.SetColor(Configuration.background, colorDialog.Color);
-                Draw();
+                Draw(true);
             }
         }
-        private void Draw()
+        private void Draw(bool resetBackGround = false)
         {
-            scene.Draw();
+            if (scene != null)
+                scene.Draw(resetBackGround);
             pictureBox.Refresh();
         }
 
         private void KdTrackBar_ValueChanged(object sender, EventArgs e)
         {
             Configuration.Kd = (float)KdTrackBar.Value / 100;
+            kdLabel.Text = "kd: " + Configuration.Kd;
             Draw();
         }
 
         private void KsTrackBar_Scroll(object sender, EventArgs e)
         {
             Configuration.Ks = (float)KsTrackBar.Value / 100;
+            ksLabel.Text = "ks: " + Configuration.Ks;
             Draw();
         }
 
         private void mTrackBar_Scroll(object sender, EventArgs e)
         {
             Configuration.M = mTrackBar.Value;
+            mLabel.Text = "m: " + Configuration.M;
             Draw();
         }
 
@@ -116,12 +126,37 @@ namespace Grid_Mesher
 
                 Configuration.background = scaledBitmap;
             }
-            Draw();
+            Draw(true);
         }
 
-        private void label7_Click(object sender, EventArgs e)
+        private void box_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (xBox.SelectedItem != null && yBox.SelectedItem != null)
+            {
+                zTrackBar.Value = (int)(Configuration.Z[int.Parse((string)xBox.SelectedItem), int.Parse((string)yBox.SelectedItem)] / Consts.XMax * zTrackBar.Maximum);
+                zLabel.Text = (zTrackBar.Value * Consts.XMax / zTrackBar.Maximum).ToString();
+            }
+        }
 
+        private void zTrackBar_ValueChanged(object sender, EventArgs e)
+        {
+            Configuration.Z[int.Parse((string)xBox.SelectedItem), int.Parse((string)yBox.SelectedItem)] = (float)zTrackBar.Value / zTrackBar.Maximum;
+            zLabel.Text = (zTrackBar.Value * Consts.XMax / zTrackBar.Maximum).ToString();
+            Draw(true);
+        }
+
+        private void animationCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            Configuration.ShouldAnimate = animationCheckBox.Checked;
+        }
+
+        private void animationTimer_Tick(object sender, EventArgs e)
+        {
+            if (animationCheckBox.Checked)
+            {
+                Light.Animate();
+                Draw();
+            }
         }
     }
 }

@@ -11,17 +11,7 @@ namespace Grid_Mesher.Stage
 {
     public static class Drawing
     {
-        private struct AETev
-        {
-            public float x;
-            public int ymax;
-            public float coeff;
-
-            public AETev DoStep()
-            {
-                return new AETev() {coeff = this.coeff, x = this.x + this.coeff, ymax = this.ymax};
-            }
-        }
+        
         private static void DrawLineDown(LockBitmap lb, Color color, Point a, Point b)
         {
             int dx = b.X - a.X, dy = b.Y - a.Y, yi = 1;
@@ -92,53 +82,15 @@ namespace Grid_Mesher.Stage
                 for (int y = 0; y < lb.Height; y++)
                     lb.SetPixel(x, y, color);
         }
-        public static void FillPolygon(LockBitmap lb, Point[] points, Triangle triangle)
+        public static void DrawTriangle(LockBitmap lb, Triangle triangle)
         {
-            int n = points.Length;
-            List<AETev> AET = new List<AETev> ();
-            int[] sortedPoints = points.Select((x, i) => new KeyValuePair<Point, int>(x, i))
-                .OrderBy(x => x.Key.Y).Select(x => x.Value).ToArray();
-            int ymin = points[sortedPoints[0]].Y; int ymax = points[sortedPoints[sortedPoints.Length - 1]].Y;
-            int lastFound = -1, prev, next;
-            for (int y = ymin + 1; y <= ymax; y++)
+            Parallel.ForEach(triangle.Pixels, p =>
             {
-                while (lastFound < n)
-                {
-                    Point curPoint = points[sortedPoints[lastFound + 1]];
-                    if (curPoint.Y > y - 1)
-                        break;
-                    lastFound++;
-                    prev = (sortedPoints[lastFound] - 1 < 0) ? n - 1 : sortedPoints[lastFound] - 1;
-                    next = (sortedPoints[lastFound] + 1) % n;
-                    if (points[next].Y > y - 1)
-                        AET.Add(new AETev { coeff = Utils.GetCoeff(curPoint, points[next]), x = curPoint.X, ymax = points[next].Y });
-                    else if (points[next].Y < y - 1)
-                        AET.Remove(new AETev { coeff = Utils.GetCoeff(curPoint, points[next]), x = curPoint.X, ymax = curPoint.Y });
-                    if (points[prev].Y > y - 1)
-                        AET.Add(new AETev { coeff = Utils.GetCoeff(curPoint, points[prev]), x = curPoint.X, ymax = points[prev].Y });
-                    else if (points[prev].Y < y - 1)
-                        AET.Remove(new AETev { coeff = Utils.GetCoeff(curPoint, points[prev]), x = curPoint.X, ymax = curPoint.Y });
-                }
-
-                AET = AET.OrderBy(x => x.x).ToList();
-
-                for (int i = 0; i < AET.Count; i += 2)
-                {
-                    for (int x = (int) AET[i].x; x < AET[i + 1].x; x++)
-                    {
-                        Color newColor = Utils.GetColorForPixel(triangle, Configuration.background.GetPixel(x, lb.Height - y), new PointF((float)x / lb.Width, (float)y / lb.Height));
-                        lb.SetPixel(x, lb.Height - y, newColor);
-                    }
-                }
-
-                for (int i = 0; i < AET.Count; i++)
-                {
-                    AET[i] = AET[i].DoStep();
-                }
-            }
+                Color newColor = Utils.GetColorForPixel(triangle, p.Color, p.Pf);
+                lb.SetPixel(p.X, lb.Height - p.Y, newColor);
+            });
         }
-
-        internal static void ClearLB(LockBitmap lb)
+        public static void ClearLB(LockBitmap lb)
         {
             for (int x = 0; x < lb.Width; x++)
                 for (int y = 0; y < lb.Height; y++)

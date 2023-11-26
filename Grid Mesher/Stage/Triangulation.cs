@@ -28,29 +28,28 @@ namespace Grid_Mesher.Stage
                     A = new Vector3(j * xOff, i * yOff, Utils.GetZ(j * xOff, i * yOff));
                     B = new Vector3((j + 1) * xOff, i * yOff, Utils.GetZ((j + 1) * xOff, i * yOff));
                     C = new Vector3((j + 1) * xOff, (i + 1) * yOff, Utils.GetZ((j + 1) * xOff, (i + 1) * yOff));
-                    triangles[i* xTriCount + j] = new Triangle() {
+                    (triangles[i* xTriCount + j] = new Triangle() {
                         A = A,
                         B = B,
                         C = C,
                         Nt = new Vector3[3] { Utils.GetNormal(A), Utils.GetNormal(B), Utils.GetNormal(C) }
-                    };
+                    }).GetPixels();
                     A = new Vector3(j * xOff, i * yOff, Utils.GetZ(j * xOff, i * yOff));
                     B = new Vector3((j + 1) * xOff, (i + 1) * yOff, Utils.GetZ((j + 1) * xOff, (i + 1) * yOff));
                     C = new Vector3(j * xOff, (i + 1) * yOff, Utils.GetZ(j * xOff, (i + 1) * yOff));
-                    triangles[size / 2 + i * xTriCount + j] = new Triangle()
+                    (triangles[size / 2 + i * xTriCount + j] = new Triangle()
                     {
                         A = A,
                         B = B,
                         C = C,
                         Nt = new Vector3[3] { Utils.GetNormal(A), Utils.GetNormal(B), Utils.GetNormal(C) }
-                    };
+                    }).GetPixels();
                 }
             }
         }
-        public void DrawGrid(LockBitmap lb)
+        public void Draw(LockBitmap lb)
         {
-            foreach (var tri in triangles)
-                tri.Draw(lb);
+            Parallel.ForEach(triangles, triangle => triangle.Draw(lb));
         }
     }
 }
