@@ -227,5 +227,11 @@ namespace Grid_Mesher
             Configuration.ShouldReplace = replaceCheckBox.Checked;
             Draw();
         }
+
+        private void sphereCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            Configuration.ShouldSphere = sphereCheckBox.Checked;
+            Draw(true);
+        }
     }
 }

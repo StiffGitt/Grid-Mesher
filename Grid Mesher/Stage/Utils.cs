@@ -25,8 +25,19 @@ namespace Grid_Mesher.Stage
             int y = (int)(v[1] * height) + 1;
             return new Point(x, y);
         }
+        private static float GetZFromSphere(float x, float y)
+        {
+            float R = Consts.R;
+            float X = Consts.SC.X;
+            float Y = Consts.SC.Y;
+            if (Math.Sqrt((x - X) * (x - X) + (y - Y) * (y - Y)) > R)
+                return 0f;
+            return (float)Math.Sqrt(Math.Abs(R * R - (x - X) * (x - X) - (y - Y) * (y - Y)));
+        }
         public static float GetZ(float x, float y)
         {
+            if (Configuration.ShouldSphere)
+                return GetZFromSphere(x, y);
             return FuncZ(x, y);
         }
         public static float GetCoeff(Point p1, Point p2)
@@ -63,8 +74,18 @@ namespace Grid_Mesher.Stage
             }
             return z;
         }
+        private static Vector3 GetNormalFromSphere(Vector3 P)
+        {
+            //if (Math.Sqrt((P.X - Consts.SC.X) * (P.X - Consts.SC.X) + (P.Y - Consts.SC.Y) * (P.Y - Consts.SC.Y)) > Consts.R)
+            //    return new Vector3(0, 0, 1);
+            Vector3 O = Consts.SC;
+            Vector3 V = Vector3.Normalize(P - O);
+            return V;
+        }
         public static Vector3 GetNormal(Vector3 P)
         {
+            if (Configuration.ShouldSphere)
+                return GetNormalFromSphere(P);
             float h = Consts.eps;
             float zu = (FuncZ(P.X + h, P.Y) - FuncZ(P.X - h, P.Y)) / (2 * h);
             float zv = (FuncZ(P.X, P.Y + h) - FuncZ(P.X, P.Y - h)) / (2 * h);
@@ -92,6 +113,8 @@ namespace Grid_Mesher.Stage
             Color baseColor = p.Color;
             Vector3 P = p.P;
             Vector3 N = p.N;
+            //if (Math.Sqrt((P.X - Consts.SC.X) * (P.X - Consts.SC.X) + (P.Y - Consts.SC.Y) * (P.Y - Consts.SC.Y)) > Consts.R)
+            //    N = new Vector3(0, 0, 1);
             if (Configuration.ShouldNormalMap)
                 N = ModifyByNormal(N, p.X, p.Y);
             Vector3 L = Vector3.Normalize(Light.Position - P);

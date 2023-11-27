@@ -17,5 +17,7 @@ namespace Grid_Mesher.Stage
         public static readonly Vector3 V = Vector3.UnitZ;
         public static Color firstColor = Color.Goldenrod;
         public static Color BackColor;
+        public const float R = 0.5f;
+        public static Vector3 SC = new Vector3(0.5f, 0.5f, 0);
     }
 }

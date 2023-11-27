@@ -61,12 +61,13 @@
             label7 = new Label();
             xBox = new ComboBox();
             groupBox4 = new GroupBox();
+            sphereCheckBox = new CheckBox();
+            replaceCheckBox = new CheckBox();
             normalCheckBox = new CheckBox();
             normalButton = new Button();
             colorDialog = new ColorDialog();
             animationTimer = new System.Windows.Forms.Timer(components);
             fpsTimer = new System.Windows.Forms.Timer(components);
-            replaceCheckBox = new CheckBox();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
             flowLayoutPanel1.SuspendLayout();
@@ -94,10 +95,11 @@
             tableLayoutPanel1.Controls.Add(flowLayoutPanel1, 2, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Margin = new Padding(3, 4, 3, 4);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Size = new Size(984, 561);
+            tableLayoutPanel1.Size = new Size(1125, 748);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // label1
@@ -106,17 +108,18 @@
             label1.BackColor = SystemColors.AppWorkspace;
             label1.BorderStyle = BorderStyle.Fixed3D;
             label1.Dock = DockStyle.Fill;
-            label1.Location = new Point(703, 0);
+            label1.Location = new Point(804, 0);
             label1.Name = "label1";
-            label1.Size = new Size(1, 561);
+            label1.Size = new Size(1, 748);
             label1.TabIndex = 0;
             // 
             // pictureBox
             // 
             pictureBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            pictureBox.Location = new Point(3, 3);
+            pictureBox.Location = new Point(3, 4);
+            pictureBox.Margin = new Padding(3, 4, 3, 4);
             pictureBox.Name = "pictureBox";
-            pictureBox.Size = new Size(694, 555);
+            pictureBox.Size = new Size(795, 740);
             pictureBox.TabIndex = 1;
             pictureBox.TabStop = false;
             // 
@@ -130,16 +133,18 @@
             flowLayoutPanel1.Controls.Add(groupBox3);
             flowLayoutPanel1.Controls.Add(groupBox4);
             flowLayoutPanel1.Dock = DockStyle.Fill;
-            flowLayoutPanel1.Location = new Point(706, 3);
+            flowLayoutPanel1.Location = new Point(807, 4);
+            flowLayoutPanel1.Margin = new Padding(3, 4, 3, 4);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(275, 555);
+            flowLayoutPanel1.Size = new Size(315, 740);
             flowLayoutPanel1.TabIndex = 2;
             // 
             // selectLightButton
             // 
-            selectLightButton.Location = new Point(3, 3);
+            selectLightButton.Location = new Point(3, 4);
+            selectLightButton.Margin = new Padding(3, 4, 3, 4);
             selectLightButton.Name = "selectLightButton";
-            selectLightButton.Size = new Size(272, 30);
+            selectLightButton.Size = new Size(311, 40);
             selectLightButton.TabIndex = 6;
             selectLightButton.Text = "Select light color ...";
             selectLightButton.UseVisualStyleBackColor = true;
@@ -147,10 +152,9 @@
             // 
             // imageButton
             // 
-            imageButton.Location = new Point(3, 38);
-            imageButton.Margin = new Padding(3, 2, 3, 2);
+            imageButton.Location = new Point(3, 51);
             imageButton.Name = "imageButton";
-            imageButton.Size = new Size(132, 40);
+            imageButton.Size = new Size(151, 53);
             imageButton.TabIndex = 5;
             imageButton.Text = "Select background image ...";
             imageButton.UseVisualStyleBackColor = true;
@@ -159,10 +163,11 @@
             // selectColorButton
             // 
             selectColorButton.Dock = DockStyle.Top;
-            selectColorButton.Location = new Point(141, 39);
+            selectColorButton.Location = new Point(160, 52);
+            selectColorButton.Margin = new Padding(3, 4, 3, 4);
             selectColorButton.Name = "selectColorButton";
             selectColorButton.RightToLeft = RightToLeft.No;
-            selectColorButton.Size = new Size(131, 40);
+            selectColorButton.Size = new Size(150, 53);
             selectColorButton.TabIndex = 7;
             selectColorButton.Text = "Select background color...";
             selectColorButton.UseVisualStyleBackColor = true;
@@ -177,9 +182,11 @@
             groupBox1.Controls.Add(triYTrackBar);
             groupBox1.Controls.Add(triXTrackBar);
             groupBox1.Dock = DockStyle.Top;
-            groupBox1.Location = new Point(3, 85);
+            groupBox1.Location = new Point(3, 113);
+            groupBox1.Margin = new Padding(3, 4, 3, 4);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(272, 110);
+            groupBox1.Padding = new Padding(3, 4, 3, 4);
+            groupBox1.Size = new Size(311, 147);
             groupBox1.TabIndex = 3;
             groupBox1.TabStop = false;
             groupBox1.Text = "Triangulation accuracy";
@@ -187,9 +194,10 @@
             // onlyGridBox1
             // 
             onlyGridBox1.AutoSize = true;
-            onlyGridBox1.Location = new Point(127, 85);
+            onlyGridBox1.Location = new Point(145, 113);
+            onlyGridBox1.Margin = new Padding(3, 4, 3, 4);
             onlyGridBox1.Name = "onlyGridBox1";
-            onlyGridBox1.Size = new Size(98, 19);
+            onlyGridBox1.Size = new Size(121, 24);
             onlyGridBox1.TabIndex = 5;
             onlyGridBox1.Text = "And only grid";
             onlyGridBox1.UseVisualStyleBackColor = true;
@@ -198,10 +206,9 @@
             // drawGridCheckbox
             // 
             drawGridCheckbox.AutoSize = true;
-            drawGridCheckbox.Location = new Point(5, 86);
-            drawGridCheckbox.Margin = new Padding(3, 2, 3, 2);
+            drawGridCheckbox.Location = new Point(6, 115);
             drawGridCheckbox.Name = "drawGridCheckbox";
-            drawGridCheckbox.Size = new Size(116, 19);
+            drawGridCheckbox.Size = new Size(145, 24);
             drawGridCheckbox.TabIndex = 4;
             drawGridCheckbox.Text = "Should draw grid";
             drawGridCheckbox.UseVisualStyleBackColor = true;
@@ -211,9 +218,9 @@
             // 
             triYLabel.AutoSize = true;
             triYLabel.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            triYLabel.Location = new Point(4, 54);
+            triYLabel.Location = new Point(5, 72);
             triYLabel.Name = "triYLabel";
-            triYLabel.Size = new Size(21, 21);
+            triYLabel.Size = new Size(26, 28);
             triYLabel.TabIndex = 3;
             triYLabel.Text = "y:";
             // 
@@ -221,20 +228,21 @@
             // 
             triXLabel.AutoSize = true;
             triXLabel.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            triXLabel.Location = new Point(4, 22);
+            triXLabel.Location = new Point(5, 29);
             triXLabel.Name = "triXLabel";
-            triXLabel.Size = new Size(20, 21);
+            triXLabel.Size = new Size(25, 28);
             triXLabel.TabIndex = 2;
             triXLabel.Text = "x:";
             // 
             // triYTrackBar
             // 
             triYTrackBar.AutoSize = false;
-            triYTrackBar.Location = new Point(44, 54);
+            triYTrackBar.Location = new Point(50, 72);
+            triYTrackBar.Margin = new Padding(3, 4, 3, 4);
             triYTrackBar.Maximum = 100;
             triYTrackBar.Minimum = 5;
             triYTrackBar.Name = "triYTrackBar";
-            triYTrackBar.Size = new Size(213, 26);
+            triYTrackBar.Size = new Size(243, 35);
             triYTrackBar.TabIndex = 1;
             triYTrackBar.TickStyle = TickStyle.None;
             triYTrackBar.Value = 20;
@@ -243,11 +251,12 @@
             // triXTrackBar
             // 
             triXTrackBar.AutoSize = false;
-            triXTrackBar.Location = new Point(44, 22);
+            triXTrackBar.Location = new Point(50, 29);
+            triXTrackBar.Margin = new Padding(3, 4, 3, 4);
             triXTrackBar.Maximum = 100;
             triXTrackBar.Minimum = 5;
             triXTrackBar.Name = "triXTrackBar";
-            triXTrackBar.Size = new Size(213, 26);
+            triXTrackBar.Size = new Size(243, 35);
             triXTrackBar.TabIndex = 0;
             triXTrackBar.TickStyle = TickStyle.None;
             triXTrackBar.Value = 20;
@@ -265,9 +274,11 @@
             groupBox2.Controls.Add(KsTrackBar);
             groupBox2.Controls.Add(KdTrackBar);
             groupBox2.Dock = DockStyle.Top;
-            groupBox2.Location = new Point(3, 201);
+            groupBox2.Location = new Point(3, 268);
+            groupBox2.Margin = new Padding(3, 4, 3, 4);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(272, 188);
+            groupBox2.Padding = new Padding(3, 4, 3, 4);
+            groupBox2.Size = new Size(311, 251);
             groupBox2.TabIndex = 4;
             groupBox2.TabStop = false;
             groupBox2.Text = "Lighting parameters";
@@ -276,19 +287,20 @@
             // 
             zLightLabel.AutoSize = true;
             zLightLabel.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            zLightLabel.Location = new Point(4, 148);
+            zLightLabel.Location = new Point(5, 197);
             zLightLabel.Name = "zLightLabel";
-            zLightLabel.Size = new Size(20, 21);
+            zLightLabel.Size = new Size(25, 28);
             zLightLabel.TabIndex = 8;
             zLightLabel.Text = "z:";
             // 
             // zLightTrackBar
             // 
             zLightTrackBar.AutoSize = false;
-            zLightTrackBar.Location = new Point(44, 148);
+            zLightTrackBar.Location = new Point(50, 197);
+            zLightTrackBar.Margin = new Padding(3, 4, 3, 4);
             zLightTrackBar.Maximum = 100;
             zLightTrackBar.Name = "zLightTrackBar";
-            zLightTrackBar.Size = new Size(213, 26);
+            zLightTrackBar.Size = new Size(243, 35);
             zLightTrackBar.TabIndex = 7;
             zLightTrackBar.TickStyle = TickStyle.None;
             zLightTrackBar.Value = 30;
@@ -298,9 +310,10 @@
             // 
             animationCheckBox.AutoSize = true;
             animationCheckBox.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
-            animationCheckBox.Location = new Point(9, 118);
+            animationCheckBox.Location = new Point(10, 157);
+            animationCheckBox.Margin = new Padding(3, 4, 3, 4);
             animationCheckBox.Name = "animationCheckBox";
-            animationCheckBox.Size = new Size(97, 24);
+            animationCheckBox.Size = new Size(121, 29);
             animationCheckBox.TabIndex = 6;
             animationCheckBox.Text = "Animation";
             animationCheckBox.UseVisualStyleBackColor = true;
@@ -310,20 +323,21 @@
             // 
             mLabel.AutoSize = true;
             mLabel.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            mLabel.Location = new Point(4, 86);
+            mLabel.Location = new Point(5, 115);
             mLabel.Name = "mLabel";
-            mLabel.Size = new Size(27, 21);
+            mLabel.Size = new Size(33, 28);
             mLabel.TabIndex = 5;
             mLabel.Text = "m:";
             // 
             // mTrackBar
             // 
             mTrackBar.AutoSize = false;
-            mTrackBar.Location = new Point(44, 86);
+            mTrackBar.Location = new Point(50, 115);
+            mTrackBar.Margin = new Padding(3, 4, 3, 4);
             mTrackBar.Maximum = 100;
             mTrackBar.Minimum = 1;
             mTrackBar.Name = "mTrackBar";
-            mTrackBar.Size = new Size(213, 26);
+            mTrackBar.Size = new Size(243, 35);
             mTrackBar.TabIndex = 4;
             mTrackBar.TickStyle = TickStyle.None;
             mTrackBar.Value = 10;
@@ -333,9 +347,9 @@
             // 
             ksLabel.AutoSize = true;
             ksLabel.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            ksLabel.Location = new Point(4, 54);
+            ksLabel.Location = new Point(5, 72);
             ksLabel.Name = "ksLabel";
-            ksLabel.Size = new Size(28, 21);
+            ksLabel.Size = new Size(34, 28);
             ksLabel.TabIndex = 3;
             ksLabel.Text = "ks:";
             // 
@@ -343,19 +357,20 @@
             // 
             kdLabel.AutoSize = true;
             kdLabel.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            kdLabel.Location = new Point(4, 22);
+            kdLabel.Location = new Point(5, 29);
             kdLabel.Name = "kdLabel";
-            kdLabel.Size = new Size(30, 21);
+            kdLabel.Size = new Size(38, 28);
             kdLabel.TabIndex = 2;
             kdLabel.Text = "kd:";
             // 
             // KsTrackBar
             // 
             KsTrackBar.AutoSize = false;
-            KsTrackBar.Location = new Point(44, 54);
+            KsTrackBar.Location = new Point(50, 72);
+            KsTrackBar.Margin = new Padding(3, 4, 3, 4);
             KsTrackBar.Maximum = 100;
             KsTrackBar.Name = "KsTrackBar";
-            KsTrackBar.Size = new Size(213, 26);
+            KsTrackBar.Size = new Size(243, 35);
             KsTrackBar.TabIndex = 1;
             KsTrackBar.TickStyle = TickStyle.None;
             KsTrackBar.Value = 50;
@@ -364,10 +379,11 @@
             // KdTrackBar
             // 
             KdTrackBar.AutoSize = false;
-            KdTrackBar.Location = new Point(44, 22);
+            KdTrackBar.Location = new Point(50, 29);
+            KdTrackBar.Margin = new Padding(3, 4, 3, 4);
             KdTrackBar.Maximum = 100;
             KdTrackBar.Name = "KdTrackBar";
-            KdTrackBar.Size = new Size(213, 26);
+            KdTrackBar.Size = new Size(243, 35);
             KdTrackBar.TabIndex = 0;
             KdTrackBar.TickStyle = TickStyle.None;
             KdTrackBar.Value = 50;
@@ -381,11 +397,9 @@
             groupBox3.Controls.Add(yBox);
             groupBox3.Controls.Add(label7);
             groupBox3.Controls.Add(xBox);
-            groupBox3.Location = new Point(3, 394);
-            groupBox3.Margin = new Padding(3, 2, 3, 2);
+            groupBox3.Location = new Point(3, 526);
             groupBox3.Name = "groupBox3";
-            groupBox3.Padding = new Padding(3, 2, 3, 2);
-            groupBox3.Size = new Size(269, 65);
+            groupBox3.Size = new Size(307, 87);
             groupBox3.TabIndex = 8;
             groupBox3.TabStop = false;
             groupBox3.Text = "Z";
@@ -394,19 +408,20 @@
             // 
             zLabel.AutoSize = true;
             zLabel.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            zLabel.Location = new Point(4, 38);
+            zLabel.Location = new Point(5, 51);
             zLabel.Name = "zLabel";
-            zLabel.Size = new Size(20, 21);
+            zLabel.Size = new Size(25, 28);
             zLabel.TabIndex = 6;
             zLabel.Text = "z:";
             // 
             // zTrackBar
             // 
             zTrackBar.AutoSize = false;
-            zTrackBar.Location = new Point(44, 42);
+            zTrackBar.Location = new Point(50, 56);
+            zTrackBar.Margin = new Padding(3, 4, 3, 4);
             zTrackBar.Maximum = 100;
             zTrackBar.Name = "zTrackBar";
-            zTrackBar.Size = new Size(213, 26);
+            zTrackBar.Size = new Size(243, 35);
             zTrackBar.TabIndex = 5;
             zTrackBar.TickStyle = TickStyle.None;
             zTrackBar.Value = 10;
@@ -416,19 +431,18 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
-            label8.Location = new Point(111, 18);
+            label8.Location = new Point(127, 24);
             label8.Name = "label8";
-            label8.Size = new Size(19, 20);
+            label8.Size = new Size(25, 25);
             label8.TabIndex = 3;
             label8.Text = "y:";
             // 
             // yBox
             // 
             yBox.FormattingEnabled = true;
-            yBox.Location = new Point(138, 16);
-            yBox.Margin = new Padding(3, 2, 3, 2);
+            yBox.Location = new Point(158, 21);
             yBox.Name = "yBox";
-            yBox.Size = new Size(52, 23);
+            yBox.Size = new Size(59, 28);
             yBox.TabIndex = 2;
             yBox.SelectedIndexChanged += box_SelectedIndexChanged;
             // 
@@ -436,40 +450,66 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
-            label7.Location = new Point(27, 18);
+            label7.Location = new Point(31, 24);
             label7.Name = "label7";
-            label7.Size = new Size(19, 20);
+            label7.Size = new Size(25, 25);
             label7.TabIndex = 1;
             label7.Text = "x:";
             // 
             // xBox
             // 
             xBox.FormattingEnabled = true;
-            xBox.Location = new Point(54, 16);
-            xBox.Margin = new Padding(3, 2, 3, 2);
+            xBox.Location = new Point(62, 21);
             xBox.Name = "xBox";
-            xBox.Size = new Size(52, 23);
+            xBox.Size = new Size(59, 28);
             xBox.TabIndex = 0;
             xBox.SelectedIndexChanged += box_SelectedIndexChanged;
             // 
             // groupBox4
             // 
+            groupBox4.Controls.Add(sphereCheckBox);
             groupBox4.Controls.Add(replaceCheckBox);
             groupBox4.Controls.Add(normalCheckBox);
             groupBox4.Controls.Add(normalButton);
-            groupBox4.Location = new Point(3, 464);
+            groupBox4.Location = new Point(3, 620);
+            groupBox4.Margin = new Padding(3, 4, 3, 4);
             groupBox4.Name = "groupBox4";
-            groupBox4.Size = new Size(269, 80);
+            groupBox4.Padding = new Padding(3, 4, 3, 4);
+            groupBox4.Size = new Size(307, 120);
             groupBox4.TabIndex = 9;
             groupBox4.TabStop = false;
             groupBox4.Text = "Normal map";
             // 
+            // sphereCheckBox
+            // 
+            sphereCheckBox.AutoSize = true;
+            sphereCheckBox.Location = new Point(6, 88);
+            sphereCheckBox.Name = "sphereCheckBox";
+            sphereCheckBox.Size = new Size(99, 24);
+            sphereCheckBox.TabIndex = 3;
+            sphereCheckBox.Text = "Do sphere";
+            sphereCheckBox.UseVisualStyleBackColor = true;
+            sphereCheckBox.CheckedChanged += sphereCheckBox_CheckedChanged;
+            // 
+            // replaceCheckBox
+            // 
+            replaceCheckBox.AutoSize = true;
+            replaceCheckBox.Location = new Point(163, 57);
+            replaceCheckBox.Margin = new Padding(3, 4, 3, 4);
+            replaceCheckBox.Name = "replaceCheckBox";
+            replaceCheckBox.Size = new Size(130, 24);
+            replaceCheckBox.TabIndex = 2;
+            replaceCheckBox.Text = "Should replace";
+            replaceCheckBox.UseVisualStyleBackColor = true;
+            replaceCheckBox.CheckedChanged += replaceCheckBox_CheckedChanged;
+            // 
             // normalCheckBox
             // 
             normalCheckBox.AutoSize = true;
-            normalCheckBox.Location = new Point(13, 54);
+            normalCheckBox.Location = new Point(6, 57);
+            normalCheckBox.Margin = new Padding(3, 4, 3, 4);
             normalCheckBox.Name = "normalCheckBox";
-            normalCheckBox.Size = new Size(117, 19);
+            normalCheckBox.Size = new Size(145, 24);
             normalCheckBox.TabIndex = 1;
             normalCheckBox.Text = "Normal mapping";
             normalCheckBox.UseVisualStyleBackColor = true;
@@ -477,9 +517,10 @@
             // 
             // normalButton
             // 
-            normalButton.Location = new Point(9, 22);
+            normalButton.Location = new Point(10, 28);
+            normalButton.Margin = new Padding(3, 4, 3, 4);
             normalButton.Name = "normalButton";
-            normalButton.Size = new Size(248, 23);
+            normalButton.Size = new Size(283, 31);
             normalButton.TabIndex = 0;
             normalButton.Text = "Select normal map ...";
             normalButton.UseVisualStyleBackColor = true;
@@ -497,23 +538,13 @@
             fpsTimer.Interval = 1000;
             fpsTimer.Tick += fpsTimer_Tick;
             // 
-            // replaceCheckBox
-            // 
-            replaceCheckBox.AutoSize = true;
-            replaceCheckBox.Location = new Point(153, 54);
-            replaceCheckBox.Name = "replaceCheckBox";
-            replaceCheckBox.Size = new Size(104, 19);
-            replaceCheckBox.TabIndex = 2;
-            replaceCheckBox.Text = "Should replace";
-            replaceCheckBox.UseVisualStyleBackColor = true;
-            replaceCheckBox.CheckedChanged += replaceCheckBox_CheckedChanged;
-            // 
             // Form
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(984, 561);
+            ClientSize = new Size(1125, 748);
             Controls.Add(tableLayoutPanel1);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "Form";
             Text = "Grid Mesher";
             tableLayoutPanel1.ResumeLayout(false);
@@ -578,5 +609,6 @@
         private System.Windows.Forms.Timer fpsTimer;
         private CheckBox onlyGridBox1;
         private CheckBox replaceCheckBox;
+        private CheckBox sphereCheckBox;
     }
 }

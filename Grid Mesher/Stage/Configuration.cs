@@ -23,5 +23,6 @@ namespace Grid_Mesher
         public static bool ShouldAnimate { get; set; } = false;
         public static bool ShouldNormalMap { get; set; } = false;
         public static bool ShouldReplace { get; set; } = false;
+        public static bool ShouldSphere { get; set; } = false;
     }
 }
