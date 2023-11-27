@@ -90,15 +90,8 @@ namespace Grid_Mesher.Stage
         public static Color GetColorForPixel(Triangle triangle, Pixel p)
         {
             Color baseColor = p.Color;
-            PointF point = p.Pf;
-            var bar = triangle.GetBar(point);
-            Vector3 P = new Vector3()
-            {
-                X = point.X,
-                Y = point.Y,
-                Z = bar.alfa * triangle.A.Z + bar.beta * triangle.B.Z + bar.gamma * triangle.C.Z
-            };
-            Vector3 N = triangle.Nt[0] * bar.alfa + triangle.Nt[1] * bar.beta + triangle.Nt[2] * bar.gamma;
+            Vector3 P = p.P;
+            Vector3 N = p.N;
             if (Configuration.ShouldNormalMap)
                 N = ModifyByNormal(N, p.X, p.Y);
             Vector3 L = Vector3.Normalize(Light.Position - P);

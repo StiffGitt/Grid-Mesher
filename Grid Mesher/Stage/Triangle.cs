@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
+using System.Drawing;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -100,12 +101,22 @@ namespace Grid_Mesher.Stage
                 {
                     for (int x = (int)AET[i].x; x < AET[i + 1].x; x++)
                     {
+                        var pf = new PointF((float)x / Configuration.background.Width, (float)y / Configuration.background.Height);
+                        var bar = GetBar(pf);
+                        Vector3 P = new Vector3()
+                        {
+                            X = pf.X,
+                            Y = pf.Y,
+                            Z = bar.alfa * A.Z + bar.beta * B.Z + bar.gamma * C.Z
+                        };
                         Pixels.Add(new Pixel()
                         {
                             X = x,
                             Y = y,
-                            Pf = new PointF((float)x / Configuration.background.Width, (float)y / Configuration.background.Height),
+                            P = P,
+                            N = Nt[0] * bar.alfa + Nt[1] * bar.beta + Nt[2] * bar.gamma,
                             Color = Configuration.background.GetPixel(x, Configuration.background.Height - y)
+
                         });
                     }
                 }
