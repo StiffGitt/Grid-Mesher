@@ -124,7 +124,8 @@ namespace Grid_Mesher.Stage
             cosNL = cosNL < 0 ? 0 : cosNL;
             cosVR = cosVR < 0 ? 0 : cosVR;
 
-            Vector3 I0 = Vector3.Normalize(Vector3FromRGB(baseColor));
+            //Vector3 I0 = Vector3.Normalize(Vector3FromRGB(baseColor));
+            Vector3 I0 = Vector3FromRGB(baseColor);
 
             Vector3 I = Configuration.Kd * Configuration.Il * I0 * cosNL +
                 Configuration.Ks * Configuration.Il * I0 * PowFloats(cosVR, Configuration.M);

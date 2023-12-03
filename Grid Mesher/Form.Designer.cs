@@ -529,7 +529,7 @@
             // animationTimer
             // 
             animationTimer.Enabled = true;
-            animationTimer.Interval = 1;
+            animationTimer.Interval = 35;
             animationTimer.Tick += animationTimer_Tick;
             // 
             // fpsTimer

@@ -25,7 +25,7 @@ namespace Grid_Mesher
             this.lockmap = new LockBitmap(bitmap);
             this.pictureBox = pictureBox;
 
-            Configuration.Z = new float[4, 4] { { 0, 0.5f, 0.3f, 0 }, { 0.3f, 0.2f, 0.2f, 0.1f }, { 0.1f, 0.2f, 0.2f, 0.1f }, { 0, 0.1f, 0.1f, 0 } };
+            Configuration.Z = new float[4, 4] { { 0, 0.2f, 0.3f, 0 }, { 0.3f, 0.2f, 0.2f, 0.1f }, { 0.1f, 0.2f, 0.2f, 0.1f }, { 0, 0.1f, 0.1f, 0 } };
 
             Draw(true);
         }
