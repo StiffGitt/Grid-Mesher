@@ -113,8 +113,6 @@ namespace Grid_Mesher.Stage
             Color baseColor = p.Color;
             Vector3 P = p.P;
             Vector3 N = p.N;
-            //if (Math.Sqrt((P.X - Consts.SC.X) * (P.X - Consts.SC.X) + (P.Y - Consts.SC.Y) * (P.Y - Consts.SC.Y)) > Consts.R)
-            //    N = new Vector3(0, 0, 1);
             if (Configuration.ShouldNormalMap)
                 N = ModifyByNormal(N, p.X, p.Y);
             Vector3 L = Vector3.Normalize(Light.Position - P);
@@ -124,7 +122,6 @@ namespace Grid_Mesher.Stage
             cosNL = cosNL < 0 ? 0 : cosNL;
             cosVR = cosVR < 0 ? 0 : cosVR;
 
-            //Vector3 I0 = Vector3.Normalize(Vector3FromRGB(baseColor));
             Vector3 I0 = Vector3FromRGB(baseColor);
 
             Vector3 I = Configuration.Kd * Configuration.Il * I0 * cosNL +

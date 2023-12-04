@@ -110,11 +110,6 @@ namespace Grid_Mesher.Stage
                             Z = (Configuration.ShouldSphere)? Utils.GetZ(pf.X, pf.Y) : bar.alfa * A.Z + bar.beta * B.Z + bar.gamma * C.Z
                         };
                         var N = Nt[0] * bar.alfa + Nt[1] * bar.beta + Nt[2] * bar.gamma;
-                        //if (Configuration.ShouldSphere)
-                        //{
-                        //    if ((Math.Sqrt((P.X - Consts.SC.X) * (P.X - Consts.SC.X) + (P.Y - Consts.SC.Y) * (P.Y - Consts.SC.Y)) > Consts.R))
-                        //        N = new Vector3(0, 0, 1);
-                        //}
                         Pixels.Add(new Pixel()
                         {
                             X = x,
